@@ -1,6 +1,7 @@
 package com.sky.blog.mapper;
 
 import com.sky.blog.entity.ArticleTags;
+import com.sky.blog.entity.TagInfo;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -15,6 +16,10 @@ import java.util.List;
 @Mapper
 public interface ArticleTagsMapper {
     String tableName =  "article_tags";
+    String tagTableName = "tag_info";
+
+    @Select("SELECT id,name FROM article_tags at , tag_info t WHERE at.tag_id = t.id AND at.article_id = #{articleId} ")
+    List <TagInfo> getTagInfoByArticleId(int articleId);
     /**
      * 根据文章Id查询标签
      * @param articleId

@@ -3,11 +3,13 @@ package com.sky.blog.controller;
 import com.sky.blog.config.ResultData;
 import com.sky.blog.entity.ArticleInfo;
 import com.sky.blog.service.ArticleInfoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sky.blog.service.ArticleInfoView;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -17,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/articleInfo")
 public class ArticleInfoController {
-    @Autowired
+    @Resource
     private ArticleInfoService articleInfoService;
 
     /**
@@ -26,7 +28,11 @@ public class ArticleInfoController {
      */
     @RequestMapping(value = "/getAll",method = RequestMethod.GET)
     ResultData getAll(){
-        List<ArticleInfo> list = articleInfoService.getAll();
+        List<ArticleInfo> articleInfoList = articleInfoService.getAll();
+        if(articleInfoList == null){
+            return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NODATA);
+        }
+        List<ArticleInfoView> list = articleInfoService.getViewList(articleInfoList);
         return new ResultData(list);
     }
 
@@ -56,7 +62,6 @@ public class ArticleInfoController {
             return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTNULL);
         }
     }
-
     /**
      * 添加文章
      * @param title     标题
@@ -66,7 +71,8 @@ public class ArticleInfoController {
      * @return
      */
     @RequestMapping(value = "/insert",method = RequestMethod.POST)
-    ResultData insert(String title,String content,String tagIds,String typeIds){
+    ResultData insert(@RequestBody ArticleInfo a,  String title, String content, String tagIds, String typeIds){
+        System.out.println(a.toString());
         if(title == null || content == null){
             return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTNULL);
         }else{
@@ -75,7 +81,6 @@ public class ArticleInfoController {
             return  new ResultData(articleInfo);
         }
     }
-
     /**
      * 修改文章
      * @param id        文章id

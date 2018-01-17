@@ -11,13 +11,29 @@ public class DateUtils {
         System.out.println(getDateTimeStr4FileName());
     }
 
+    public static String getDateStr(String str){
+        return new SimpleDateFormat(str).format(new Date());
+    }
+    public static String getDateStr(String str,Date date){
+        return new SimpleDateFormat(str).format(date);
+    }
     /**
      * 格式：yyyyMMdd_HHmmss_SSS
      * 用于生成文件名
      * @return
      */
     public static String getDateTimeStr4FileName(){
-        return new SimpleDateFormat("yyyyMMdd_HHmmss_SSS").format(new Date());
+        return getDateStr("yyyyMMdd_HHmmss_SSS");
     }
 
+    public static String getDateTimeStr4Show(){
+        return getDateStr("yyyy-mm-dd HH:mm:ss");
+    }
+    public static String getDateTimeStr4Show(Date date){
+        return getDateStr("yyyy-mm-dd HH:mm:ss",date);
+    }
+
+    public static String getDateStr4Show(){
+        return getDateStr("yyyy-mm-dd");
+    }
 }

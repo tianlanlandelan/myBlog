@@ -1,14 +1,14 @@
 package com.sky.blog.service;
 
 import com.sky.blog.config.BlogConfig;
-import com.sky.blog.entity.ArticleInfo;
-import com.sky.blog.entity.ArticleTags;
-import com.sky.blog.entity.ArticleTypes;
-import com.sky.blog.entity.TagInfo;
+import com.sky.blog.entity.*;
 import com.sky.blog.mapper.*;
+import com.sky.blog.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -120,5 +120,30 @@ public class ArticleInfoService {
             }
         }
     }
+    public ArticleInfoView toArticleInfoView(ArticleInfo articleInfo) {
+        ArticleInfoView articleInfoView = new ArticleInfoView();
+        articleInfoView.setId(articleInfo.getId());
+        articleInfoView.setTitle(articleInfo.getTitle());
+        articleInfoView.setContent(articleInfo.getContent());
+        articleInfoView.setSendTime(articleInfo.getSendTime());
 
+        articleInfoView.setSendTimeStr(DateUtils.getDateTimeStr4Show(articleInfo.getSendTime()));
+        List<TypeInfo> typesList = articleTypesMapper.getTypeInfoByArticleId(articleInfo.getId());
+        if(typesList != null && typesList.size() > 0 ){
+            articleInfoView.setType(typesList.get(0).getName());
+        }
+        List<TagInfo> tagInfoList = articleTagsMapper.getTagInfoByArticleId(articleInfo.getId());
+        for(TagInfo tagInfo:tagInfoList){
+            articleInfoView.getTags().add(tagInfo.getName());
+        }
+        return articleInfoView;
+    }
+
+    public List<ArticleInfoView> getViewList(List<ArticleInfo> articleInfoList){
+        List<ArticleInfoView> list = new ArrayList<ArticleInfoView>();
+        for(ArticleInfo articleInfo:articleInfoList){
+            list.add(toArticleInfoView(articleInfo));
+        }
+        return list;
+    }
 }

@@ -55,4 +55,14 @@ public class ArticleInfo {
     public void setSendTime(Date sendTime) {
         this.sendTime = sendTime;
     }
+
+    @Override
+    public String toString() {
+        return "ArticleInfo{" +
+                "title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", sendTime=" + sendTime +
+                ", id=" + id +
+                '}';
+    }
 }

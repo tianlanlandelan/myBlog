@@ -2,6 +2,7 @@ package com.sky.blog.mapper;
 
 import com.sky.blog.entity.ArticleTags;
 import com.sky.blog.entity.ArticleTypes;
+import com.sky.blog.entity.TypeInfo;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -15,6 +16,10 @@ import java.util.List;
 @Mapper
 public interface ArticleTypesMapper {
     String tableName =  "article_types";
+    String typeTableName = "type_info";
+
+    @Select("SELECT id,name FROM article_types at,type_info t WHERE at.type_id = t.id AND at.article_id = #{articleId} ")
+    List <TypeInfo> getTypeInfoByArticleId(int articleId);
 
     @Select("SELECT article_id,tag_id FROM " + tableName + " WHERE article_id = #{articleId}")
     List<ArticleTypes> getByArticleId(int articleId);
