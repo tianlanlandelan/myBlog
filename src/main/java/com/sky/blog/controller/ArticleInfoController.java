@@ -3,7 +3,7 @@ package com.sky.blog.controller;
 import com.sky.blog.config.ResultData;
 import com.sky.blog.entity.ArticleInfo;
 import com.sky.blog.service.ArticleInfoService;
-import com.sky.blog.service.ArticleInfoView;
+import com.sky.blog.view.ArticleInfoView;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 文章相关操作
@@ -64,15 +65,16 @@ public class ArticleInfoController {
     }
     /**
      * 添加文章
-     * @param title     标题
-     * @param content   内容
-     * @param tagIds    标签id列表
-     * @param typeIds   类型id列表
+     *     请求json封装成的对象
+     * 原始请求参数：
+     *  title     标题
+     *  content   内容
+     *  tagIds    标签id列表
+     *  typeIds   类型id列表
      * @return
      */
     @RequestMapping(value = "/insert",method = RequestMethod.POST)
-    ResultData insert(@RequestBody ArticleInfo a,  String title, String content, String tagIds, String typeIds){
-        System.out.println(a.toString());
+    ResultData insert(String title , String content, String tagIds, String typeIds){
         if(title == null || content == null){
             return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTNULL);
         }else{

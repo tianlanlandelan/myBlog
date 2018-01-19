@@ -4,10 +4,10 @@ import com.sky.blog.config.BlogConfig;
 import com.sky.blog.entity.*;
 import com.sky.blog.mapper.*;
 import com.sky.blog.utils.DateUtils;
+import com.sky.blog.view.ArticleInfoView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,15 +37,7 @@ public class ArticleInfoService {
         return articleInfoMapper.getListByTagId(tagId);
     }
 
-    /**
-     *  添加文章
-     *  添加文章，如果传入参数有标签id列表和类型id列表，将同时设置文章的标签和类型
-     * @param title
-     * @param content
-     * @param tagIds
-     * @param typeIds
-     * @return
-     */
+
     public ArticleInfo insert(String title,String content,String tagIds,String typeIds){
         ArticleInfo articleInfo = new ArticleInfo(title,content);
         articleInfoMapper.insert(articleInfo);
@@ -61,6 +53,27 @@ public class ArticleInfoService {
             return null;
         }
     }
+    /**
+     *  添加文章
+     *  添加文章，如果传入参数有标签id列表和类型id列表，将同时设置文章的标签和类型
+     * @param articleInfoView
+     * @return
+     */
+//    public ArticleInfo insert(ArticleInfoView articleInfoView){
+//        ArticleInfo articleInfo = new ArticleInfo(articleInfoView.getTitle(),articleInfoView.getContent());
+//        articleInfoMapper.insert(articleInfo);
+//        if(articleInfo.getId() != 0){
+//            //设置标签
+//            setArticleTags(articleInfo.getId(),articleInfoView.getTagIds());
+//            //设置类型
+//            setArticleTypes(articleInfo.getId(),articleInfoView.getTypeIds());
+//            //文章内容一般较大，返回到页面时，去掉内容
+//            articleInfo.setContent("");
+//            return articleInfo;
+//        }else {
+//            return null;
+//        }
+//    }
 
     /**
      * 修改文章
@@ -120,6 +133,12 @@ public class ArticleInfoService {
             }
         }
     }
+
+    /**
+     * 将ArticleInfo对象转换成ArticleInfoView用于在页面上显示
+     * @param articleInfo 文章信息基本对象
+     * @return  ArticleInfoView 视图对象
+     */
     public ArticleInfoView toArticleInfoView(ArticleInfo articleInfo) {
         ArticleInfoView articleInfoView = new ArticleInfoView();
         articleInfoView.setId(articleInfo.getId());
@@ -139,6 +158,11 @@ public class ArticleInfoService {
         return articleInfoView;
     }
 
+    /**
+     *
+     * @param articleInfoList
+     * @return
+     */
     public List<ArticleInfoView> getViewList(List<ArticleInfo> articleInfoList){
         List<ArticleInfoView> list = new ArrayList<ArticleInfoView>();
         for(ArticleInfo articleInfo:articleInfoList){

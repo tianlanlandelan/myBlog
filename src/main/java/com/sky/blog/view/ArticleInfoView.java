@@ -1,4 +1,4 @@
-package com.sky.blog.service;
+package com.sky.blog.view;
 
 import com.sky.blog.entity.*;
 import com.sky.blog.utils.DateUtils;
@@ -15,6 +15,7 @@ public class ArticleInfoView {
     private int id;
     private String title;
     private String content;
+    private String outline;
     private String tagIds;
     private String typeIds;
     private List<String> tags = new ArrayList<String>();
@@ -95,5 +96,29 @@ public class ArticleInfoView {
 
     public void setSendTimeStr(String sendTimeStr) {
         this.sendTimeStr = sendTimeStr;
+    }
+
+    public String getOutline() {
+        return outline;
+    }
+
+    public void setOutline(String outline) {
+        this.outline = outline;
+    }
+
+    @Override
+    public String toString() {
+        return "ArticleInfoView{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", outline='" + outline + '\'' +
+                ", tagIds='" + tagIds + '\'' +
+                ", typeIds='" + typeIds + '\'' +
+                ", tags=" + tags +
+                ", type='" + type + '\'' +
+                ", sendTime=" + sendTime +
+                ", sendTimeStr='" + sendTimeStr + '\'' +
+                '}';
     }
 }

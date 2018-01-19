@@ -27,13 +27,13 @@ public class DateUtils {
     }
 
     public static String getDateTimeStr4Show(){
-        return getDateStr("yyyy-mm-dd HH:mm:ss");
+        return getDateStr("yyyy-MM-dd HH:mm:ss");
     }
     public static String getDateTimeStr4Show(Date date){
-        return getDateStr("yyyy-mm-dd HH:mm:ss",date);
+        return getDateStr("yyyy-MM-dd HH:mm:ss",date);
     }
 
     public static String getDateStr4Show(){
-        return getDateStr("yyyy-mm-dd");
+        return getDateStr("yyyy-MM-dd");
     }
 }

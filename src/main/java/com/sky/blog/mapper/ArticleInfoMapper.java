@@ -20,7 +20,7 @@ public interface ArticleInfoMapper{
      * 该方法只返回文章id、标题、发表时间，不返回文章内容
      * @return
      */
-    @Select("SELECT id,title,content,sendtime FROM " + tableName + " ORDER BY sendtime DESC")
+    @Select("SELECT * FROM " + tableName + " ORDER BY sendtime DESC")
     List<ArticleInfo> getAll();
 
     /**
@@ -28,7 +28,7 @@ public interface ArticleInfoMapper{
      * @param tagId
      * @return
      */
-    @Select("SELECT  a.id,a.title,a.sendtime FROM article_info a,article_tags at WHERE a.id = at.article_id and at.tag_id = #{tagId}")
+    @Select("SELECT  a.id,a.title,a.sendtime,a.outline FROM article_info a,article_tags at WHERE a.id = at.article_id and at.tag_id = #{tagId}")
     List<ArticleInfo> getListByTagId(int tagId);
 
     /**
@@ -36,7 +36,7 @@ public interface ArticleInfoMapper{
      * @param typeId
      * @return
      */
-    @Select("SELECT  a.id,a.title,a.sendtime FROM article_info a,article_types at WHERE a.id = at.article_id and at.type_id = #{typeId}")
+    @Select("SELECT  a.id,a.title,a.sendtime,a.outline FROM article_info a,article_types at WHERE a.id = at.article_id and at.type_id = #{typeId}")
     List<ArticleInfo> getListByTypeId(int typeId);
 
     /**
@@ -44,18 +44,18 @@ public interface ArticleInfoMapper{
      * @param id
      * @return
      */
-    @Select("SELECT id,title,content,sendtime FROM " + tableName + " where id = #{id}")
+    @Select("SELECT * FROM " + tableName + " where id = #{id}")
     ArticleInfo getById(int id);
 
     /**
      * 添加文章并返回文章ID
      * @param articleInfo
      */
-    @Insert("INSERT INTO " + tableName + " (title,content,sendtime) VALUES (#{title},#{content},#{sendTime})")
+    @Insert("INSERT INTO " + tableName + " (title,content,sendtime,outline) VALUES (#{title},#{content},#{sendTime},#{outline})")
     @SelectKey(statement = "SELECT last_insert_id() as id", keyProperty = "id", before = false, resultType = Integer.class, statementType = StatementType.STATEMENT)
     void insert(ArticleInfo articleInfo);
 
-    @Update("UPDATE " + tableName + " SET title = #{title} , content = #{content} WHERE id = #{id} ")
+    @Update("UPDATE " + tableName + " SET title = #{title} , content = #{content} , outline = #{outline} WHERE id = #{id} ")
     void update(ArticleInfo articleInfo);
 
 }
