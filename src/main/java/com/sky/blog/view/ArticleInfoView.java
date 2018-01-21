@@ -16,6 +16,7 @@ public class ArticleInfoView {
     private String title;
     private String content;
     private String outline;
+    private String txtContent;
     private String tagIds;
     private String typeIds;
     private List<String> tags = new ArrayList<String>();
@@ -106,6 +107,14 @@ public class ArticleInfoView {
         this.outline = outline;
     }
 
+    public String getTxtContent() {
+        return txtContent;
+    }
+
+    public void setTxtContent(String txtContent) {
+        this.txtContent = txtContent;
+    }
+
     @Override
     public String toString() {
         return "ArticleInfoView{" +
@@ -113,6 +122,7 @@ public class ArticleInfoView {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", outline='" + outline + '\'' +
+                ", txtContent='" + txtContent + '\'' +
                 ", tagIds='" + tagIds + '\'' +
                 ", typeIds='" + typeIds + '\'' +
                 ", tags=" + tags +

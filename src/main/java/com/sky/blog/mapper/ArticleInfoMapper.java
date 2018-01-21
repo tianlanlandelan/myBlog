@@ -17,10 +17,10 @@ public interface ArticleInfoMapper{
 
     /**
      * 获取文章列表
-     * 该方法只返回文章id、标题、发表时间，不返回文章内容
+     * 该方法只返回文章id、标题、概述、发布时间，不返回文章内容
      * @return
      */
-    @Select("SELECT * FROM " + tableName + " ORDER BY sendtime DESC")
+    @Select("SELECT id,title,outline,sendtime FROM " + tableName + " ORDER BY sendtime DESC")
     List<ArticleInfo> getAll();
 
     /**
@@ -51,11 +51,11 @@ public interface ArticleInfoMapper{
      * 添加文章并返回文章ID
      * @param articleInfo
      */
-    @Insert("INSERT INTO " + tableName + " (title,content,sendtime,outline) VALUES (#{title},#{content},#{sendTime},#{outline})")
+    @Insert("INSERT INTO " + tableName + " (title,content,sendtime,outline,txtContent) VALUES (#{title},#{content},#{sendTime},#{outline},#{txtContent})")
     @SelectKey(statement = "SELECT last_insert_id() as id", keyProperty = "id", before = false, resultType = Integer.class, statementType = StatementType.STATEMENT)
     void insert(ArticleInfo articleInfo);
 
-    @Update("UPDATE " + tableName + " SET title = #{title} , content = #{content} , outline = #{outline} WHERE id = #{id} ")
+    @Update("UPDATE " + tableName + " SET title = #{title} , content = #{content} , txtContent = #{txtContent} , outline = #{outline} WHERE id = #{id} ")
     void update(ArticleInfo articleInfo);
 
 }

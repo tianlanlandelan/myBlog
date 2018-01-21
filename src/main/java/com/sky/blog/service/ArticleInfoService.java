@@ -37,43 +37,31 @@ public class ArticleInfoService {
         return articleInfoMapper.getListByTagId(tagId);
     }
 
-
-    public ArticleInfo insert(String title,String content,String tagIds,String typeIds){
-        ArticleInfo articleInfo = new ArticleInfo(title,content);
+    /**
+     * 添加文章
+     * 当传入文章概要时，设置文章概要；
+     * 当没有添加概要，设置文章前120字为概要，这个时候要做一下处理：文章内容是html格式的，需要只取文本内容
+     * @return
+     */
+    public Integer insert(ArticleInfoView articleInfoView){
+        ArticleInfo articleInfo = new ArticleInfo(articleInfoView.getTitle(),articleInfoView.getContent(),articleInfoView.getOutline(),articleInfoView.getTxtContent());
+        if(articleInfo.getOutline() == null && articleInfo.getTxtContent() != null){
+            articleInfo.setOutline(articleInfo.getTxtContent().length() > 120 ? articleInfo.getTxtContent().substring(0,120) : articleInfo.getTxtContent());
+        }else {
+            //TODO 当文章没有文本内容时，文章概要的处理
+            articleInfo.setOutline("我也不知道这是个什么鬼");
+        }
         articleInfoMapper.insert(articleInfo);
         if(articleInfo.getId() != 0){
             //设置标签
-            setArticleTags(articleInfo.getId(),tagIds);
+            setArticleTags(articleInfo.getId(),articleInfoView.getTagIds());
             //设置类型
-            setArticleTypes(articleInfo.getId(),typeIds);
-            //文章内容一般较大，返回到页面时，去掉内容
-            articleInfo.setContent("");
-            return articleInfo;
+            setArticleTypes(articleInfo.getId(),articleInfoView.getTypeIds());
+            return articleInfo.getId();
         }else {
             return null;
         }
     }
-    /**
-     *  添加文章
-     *  添加文章，如果传入参数有标签id列表和类型id列表，将同时设置文章的标签和类型
-     * @param articleInfoView
-     * @return
-     */
-//    public ArticleInfo insert(ArticleInfoView articleInfoView){
-//        ArticleInfo articleInfo = new ArticleInfo(articleInfoView.getTitle(),articleInfoView.getContent());
-//        articleInfoMapper.insert(articleInfo);
-//        if(articleInfo.getId() != 0){
-//            //设置标签
-//            setArticleTags(articleInfo.getId(),articleInfoView.getTagIds());
-//            //设置类型
-//            setArticleTypes(articleInfo.getId(),articleInfoView.getTypeIds());
-//            //文章内容一般较大，返回到页面时，去掉内容
-//            articleInfo.setContent("");
-//            return articleInfo;
-//        }else {
-//            return null;
-//        }
-//    }
 
     /**
      * 修改文章
@@ -143,7 +131,9 @@ public class ArticleInfoService {
         ArticleInfoView articleInfoView = new ArticleInfoView();
         articleInfoView.setId(articleInfo.getId());
         articleInfoView.setTitle(articleInfo.getTitle());
+        articleInfoView.setOutline(articleInfo.getOutline());
         articleInfoView.setContent(articleInfo.getContent());
+        articleInfoView.setTxtContent(articleInfo.getTxtContent());
         articleInfoView.setSendTime(articleInfo.getSendTime());
 
         articleInfoView.setSendTimeStr(DateUtils.getDateTimeStr4Show(articleInfo.getSendTime()));

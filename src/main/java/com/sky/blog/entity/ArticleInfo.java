@@ -10,23 +10,21 @@ public class ArticleInfo {
     private String title;
     private String content;
     private String outline;
+    private String txtContent;
     private Date sendTime;
 
 
     public ArticleInfo() {
     }
 
-    public ArticleInfo(String title, String content, Date sendTime) {
+    public ArticleInfo(String title, String content, String outline, String txtContent) {
         this.title = title;
         this.content = content;
-        this.sendTime = sendTime;
-    }
-
-    public ArticleInfo(String title, String content) {
-        this.title = title;
-        this.content = content;
+        this.outline = outline;
+        this.txtContent = txtContent;
         this.sendTime = new Date();
     }
+
     public int getId() {
         return id;
     }
@@ -66,6 +64,14 @@ public class ArticleInfo {
         this.outline = outline;
     }
 
+    public String getTxtContent() {
+        return txtContent;
+    }
+
+    public void setTxtContent(String txtContent) {
+        this.txtContent = txtContent;
+    }
+
     @Override
     public String toString() {
         return "ArticleInfo{" +
@@ -73,6 +79,7 @@ public class ArticleInfo {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", outline='" + outline + '\'' +
+                ", txtContent='" + txtContent + '\'' +
                 ", sendTime=" + sendTime +
                 '}';
     }

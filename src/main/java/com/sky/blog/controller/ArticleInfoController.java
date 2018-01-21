@@ -68,19 +68,22 @@ public class ArticleInfoController {
      *     请求json封装成的对象
      * 原始请求参数：
      *  title     标题
-     *  content   内容
+     *  content   内容（html格式）
+     *  outline   概要
+     *  txtContent文本内容
      *  tagIds    标签id列表
      *  typeIds   类型id列表
+     *  @param articleInfoView
      * @return
      */
     @RequestMapping(value = "/insert",method = RequestMethod.POST)
-    ResultData insert(String title , String content, String tagIds, String typeIds){
-        if(title == null || content == null){
+    ResultData insert(@RequestBody ArticleInfoView articleInfoView){
+        if(articleInfoView.getTitle() == null || articleInfoView.getContent() == null){
             return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTNULL);
         }else{
-            ArticleInfo articleInfo = articleInfoService.insert(title,content,tagIds,typeIds);
-            if(articleInfo == null) return new ResultData(ResultData.ERROR,ResultData.MESSAGE_ERROR);
-            return  new ResultData(articleInfo);
+            Integer result = articleInfoService.insert(articleInfoView);
+            if(result == null) return new ResultData(ResultData.ERROR,ResultData.MESSAGE_ERROR);
+            return  new ResultData(result);
         }
     }
     /**
