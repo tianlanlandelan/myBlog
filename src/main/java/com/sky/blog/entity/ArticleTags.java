@@ -5,14 +5,14 @@ package com.sky.blog.entity;
  */
 public class ArticleTags {
     private int articleId;
-    private int tagId;
+    private String tagName;
 
     public ArticleTags() {
     }
 
-    public ArticleTags(int articleId, int tagId) {
+    public ArticleTags(int articleId, String tagName) {
         this.articleId = articleId;
-        this.tagId = tagId;
+        this.tagName = tagName;
     }
 
     public int getArticleId() {
@@ -23,11 +23,11 @@ public class ArticleTags {
         this.articleId = articleId;
     }
 
-    public int getTagId() {
-        return tagId;
+    public String getTagName() {
+        return tagName;
     }
 
-    public void setTagId(int tagId) {
-        this.tagId = tagId;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 }

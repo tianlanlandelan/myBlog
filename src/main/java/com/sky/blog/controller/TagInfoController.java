@@ -29,26 +29,6 @@ public class TagInfoController {
         return new ResultData(list);
     }
 
-    /**
-     * 修改标签
-     * @param id    原标签id
-     * @param name  标签新名称
-     * @return
-     */
-    @RequestMapping(value = "/update",method = RequestMethod.PUT)
-    ResultData update(Integer id,String name){
-        if(id != null && name != null){
-            TagInfo info = tagInfoService.update(id,name);
-            if(info != null){
-                return new ResultData(info);
-            }else{
-                return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTEXIT);
-            }
-        }else{
-            return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTNULL);
-        }
-
-    }
 
     /**
      * 添加新标签
@@ -66,13 +46,13 @@ public class TagInfoController {
 
     /**
      * 删除标签
-     * @param id    标签id
+     * @param name    标签名称
      * @return
      */
-    @RequestMapping(value = "/deleteById",method = RequestMethod.DELETE)
-    ResultData deleteById(Integer id){
-        if(id != null){
-            tagInfoService.deleteById(id);
+    @RequestMapping(value = "/deleteByName",method = RequestMethod.DELETE)
+    ResultData deleteByName(String name){
+        if(name != null){
+            tagInfoService.deleteByName(name);
             return new ResultData();
         }else{
             return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTNULL);

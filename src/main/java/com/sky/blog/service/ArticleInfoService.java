@@ -17,6 +17,8 @@ import java.util.List;
 @Service
 public class ArticleInfoService {
     @Autowired
+    TagInfoService tagInfoService;
+    @Autowired
     private ArticleInfoMapper articleInfoMapper;
     @Autowired
     private ArticleTagsMapper articleTagsMapper;
@@ -54,9 +56,9 @@ public class ArticleInfoService {
         articleInfoMapper.insert(articleInfo);
         if(articleInfo.getId() != 0){
             //设置标签
-            setArticleTags(articleInfo.getId(),articleInfoView.getTagIds());
+            setArticleTags(articleInfo.getId(),articleInfoView.getTagNames());
             //设置类型
-            setArticleTypes(articleInfo.getId(),articleInfoView.getTypeIds());
+            setArticleTypes(articleInfo.getId(),articleInfoView.getTypeId());
             return articleInfo.getId();
         }else {
             return null;
@@ -69,56 +71,53 @@ public class ArticleInfoService {
      * @param id        文章id
      * @param title     标题
      * @param content   内容
-     * @param tagIds    标签id列表
-     * @param typeIds   类型id列表
-     * @return
+     * @param tagNames    标签名称列表
+     * @param typeId   类型id
+     * @return  ArticleInfo 文章详情
      */
-    public ArticleInfo update(int id,String title,String content ,String tagIds,String typeIds){
+    public ArticleInfo update(int id,String title,String content ,String tagNames,Integer typeId){
         ArticleInfo articleInfo = articleInfoMapper.getById(id);
         if(articleInfo == null) return null;
         if(title != null) articleInfo.setTitle(title);
         if(content != null) articleInfo.setContent(content);
         articleInfoMapper.update(articleInfo);
         //设置文章标签和类型
-        setArticleTags(id,tagIds);
-        setArticleTypes(id,typeIds);
+        setArticleTags(id,tagNames);
+        setArticleTypes(id,typeId);
         articleInfo.setContent("");
         return  articleInfo;
     }
 
     /**
      * 设置文章标签
-     * @param articleId
-     * @param tagIds
+     * 当要添加的标签不存在，同时添加标签
+     * @param articleId 文章ID
+     * @param tagNames  标签名称列表
      */
-    private void setArticleTags(int articleId,String tagIds){
-        if(tagIds != null){
+    private void setArticleTags(int articleId,String tagNames){
+        if(tagNames != null){
+            //设置标签前先删除文章所有标签
             articleTagsMapper.deleteByArticleId(articleId);
-            String[] list =  tagIds.split(BlogConfig.SPLITSTR);
-            for(String str:list){
-                Integer tagId = Integer.parseInt(str);
-                if(tagId == null) continue;
-                ArticleTags articleTags = new ArticleTags(articleId,tagId);
+            String[] list =  tagNames.split(BlogConfig.SPLITSTR);
+            for(String tagName:list){
+                if(tagName == null) continue;
+                ArticleTags articleTags = new ArticleTags(articleId,tagName);
                 articleTagsMapper.insert(articleTags);
             }
+            tagInfoService.insertList(tagNames);
         }
     }
 
     /**
      * 设置文章类型
      * @param articleId
-     * @param typeIds
+     * @param typeId
      */
-    private void setArticleTypes(int articleId,String typeIds){
-        if(typeIds != null){
+    private void setArticleTypes(int articleId,Integer typeId){
+        if(typeId != null){
             articleTypesMapper.deleteByArticleId(articleId);
-            String[] list =  typeIds.split(BlogConfig.SPLITSTR);
-            for(String str:list){
-                Integer typeId = Integer.parseInt(str);
-                if(typeId == null) continue;
-                ArticleTypes articleTags = new ArticleTypes(articleId,typeId);
-                articleTypesMapper.insert(articleTags);
-            }
+            ArticleTypes articleTags = new ArticleTypes(articleId,typeId);
+            articleTypesMapper.insert(articleTags);
         }
     }
 
@@ -138,12 +137,13 @@ public class ArticleInfoService {
 
         articleInfoView.setSendTimeStr(DateUtils.getDateTimeStr4Show(articleInfo.getSendTime()));
         List<TypeInfo> typesList = articleTypesMapper.getTypeInfoByArticleId(articleInfo.getId());
-        if(typesList != null && typesList.size() > 0 ){
-            articleInfoView.setType(typesList.get(0).getName());
+        for(TypeInfo type : typesList){
+            articleInfoView.setTypeId(type.getId());
+            articleInfoView.setTypeName(type.getName());
         }
-        List<TagInfo> tagInfoList = articleTagsMapper.getTagInfoByArticleId(articleInfo.getId());
-        for(TagInfo tagInfo:tagInfoList){
-            articleInfoView.getTags().add(tagInfo.getName());
+        List<String> tagNameList = articleTagsMapper.getByArticleId(articleInfo.getId());
+        for(String tagName:tagNameList){
+            articleInfoView.getTagList().add(tagName);
         }
         return articleInfoView;
     }

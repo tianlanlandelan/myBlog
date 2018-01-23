@@ -20,6 +20,9 @@ public interface TagInfoMapper {
     @Select("SELECT id,name FROM " +  tableName +" ")
     List<TagInfo> getAll();
 
+    @Select("SELECT name FROM " +  tableName +" ")
+    List<String> getAllName();
+
     /**
      * 添加标签
      * @param tagInfo
@@ -30,14 +33,10 @@ public interface TagInfoMapper {
 
     /**
      * 根据ID删除标签
-     * @param id
+     * @param name
      */
-    @Delete("DELETE FROM " + tableName + " WHERE id = #{id}")
-    void deleteById(int id);
+    @Delete("DELETE FROM " + tableName + " WHERE name = #{name}")
+    void deleteByName(String name);
 
-    @Update("UPDATE " + tableName + " SET name = #{name} WHERE id = #{id}")
-    void update(TagInfo tagInfo);
 
-    @Select("SELECT id,name FROM " + tableName + " WHERE id = #{id}")
-    TagInfo getById(int id);
 }

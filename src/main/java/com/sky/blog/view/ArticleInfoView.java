@@ -1,8 +1,5 @@
 package com.sky.blog.view;
 
-import com.sky.blog.entity.*;
-import com.sky.blog.utils.DateUtils;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,10 +14,10 @@ public class ArticleInfoView {
     private String content;
     private String outline;
     private String txtContent;
-    private String tagIds;
-    private String typeIds;
-    private List<String> tags = new ArrayList<String>();
-    private String type;
+    private String tagNames;
+    private List<String> tagList = new ArrayList<String>();
+    private Integer typeId;
+    private String typeName;
     private Date sendTime;
     private String sendTimeStr;
 
@@ -51,36 +48,52 @@ public class ArticleInfoView {
         this.content = content;
     }
 
-    public String getTagIds() {
-        return tagIds;
+    public String getOutline() {
+        return outline;
     }
 
-    public void setTagIds(String tagIds) {
-        this.tagIds = tagIds;
+    public void setOutline(String outline) {
+        this.outline = outline;
     }
 
-    public String getTypeIds() {
-        return typeIds;
+    public String getTxtContent() {
+        return txtContent;
     }
 
-    public void setTypeIds(String typeIds) {
-        this.typeIds = typeIds;
+    public void setTxtContent(String txtContent) {
+        this.txtContent = txtContent;
     }
 
-    public List<String> getTags() {
-        return tags;
+    public String getTagNames() {
+        return tagNames;
     }
 
-    public void setTags(List<String> tags) {
-        this.tags = tags;
+    public void setTagNames(String tagNames) {
+        this.tagNames = tagNames;
     }
 
-    public String getType() {
-        return type;
+    public List<String> getTagList() {
+        return tagList;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTagList(List<String> tagList) {
+        this.tagList = tagList;
+    }
+
+    public Integer getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     public Date getSendTime() {
@@ -99,22 +112,6 @@ public class ArticleInfoView {
         this.sendTimeStr = sendTimeStr;
     }
 
-    public String getOutline() {
-        return outline;
-    }
-
-    public void setOutline(String outline) {
-        this.outline = outline;
-    }
-
-    public String getTxtContent() {
-        return txtContent;
-    }
-
-    public void setTxtContent(String txtContent) {
-        this.txtContent = txtContent;
-    }
-
     @Override
     public String toString() {
         return "ArticleInfoView{" +
@@ -123,10 +120,10 @@ public class ArticleInfoView {
                 ", content='" + content + '\'' +
                 ", outline='" + outline + '\'' +
                 ", txtContent='" + txtContent + '\'' +
-                ", tagIds='" + tagIds + '\'' +
-                ", typeIds='" + typeIds + '\'' +
-                ", tags=" + tags +
-                ", type='" + type + '\'' +
+                ", tagNames='" + tagNames + '\'' +
+                ", tagList=" + tagList +
+                ", typeId=" + typeId +
+                ", typeName='" + typeName + '\'' +
                 ", sendTime=" + sendTime +
                 ", sendTimeStr='" + sendTimeStr + '\'' +
                 '}';

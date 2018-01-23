@@ -42,37 +42,37 @@ public class ArticleInfoController {
      * @param typeId    类型id
      * @return
      */
-    @RequestMapping(value = "/getListByTypeId",method = RequestMethod.GET)
-    ResultData getListByTypeId(Integer typeId){
-        if(typeId != null){
-            return new ResultData(articleInfoService.getListByTypeId(typeId));
-        }else{
-            return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTNULL);
-        }
-    }
+//    @RequestMapping(value = "/getListByTypeId",method = RequestMethod.GET)
+//    ResultData getListByTypeId(Integer typeId){
+//        if(typeId != null){
+//            return new ResultData(articleInfoService.getListByTypeId(typeId));
+//        }else{
+//            return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTNULL);
+//        }
+//    }
     /**
      * 获取指定标签的文章列表
      * @param tagId     标签id
      * @return
      */
-    @RequestMapping(value = "/getListByTagId",method = RequestMethod.GET)
-    ResultData getListByTagId(Integer tagId){
-        if(tagId != null){
-            return new ResultData(articleInfoService.getListByTagId(tagId));
-        }else{
-            return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTNULL);
-        }
-    }
+//    @RequestMapping(value = "/getListByTagId",method = RequestMethod.GET)
+//    ResultData getListByTagId(Integer tagId){
+//        if(tagId != null){
+//            return new ResultData(articleInfoService.getListByTagId(tagId));
+//        }else{
+//            return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTNULL);
+//        }
+//    }
     /**
      * 添加文章
      *     请求json封装成的对象
      * 原始请求参数：
-     *  title     标题
-     *  content   内容（html格式）
-     *  outline   概要
-     *  txtContent文本内容
-     *  tagIds    标签id列表
-     *  typeIds   类型id列表
+     *  title       标题
+     *  content     内容（html格式）
+     *  outline     概要
+     *  txtContent  文本内容
+     *  typeId      类型ID
+     *  tagNames    标签名称列表
      *  @param articleInfoView
      * @return
      */
@@ -88,22 +88,23 @@ public class ArticleInfoController {
     }
     /**
      * 修改文章
-     * @param id        文章id
-     * @param title     标题
-     * @param content   内容
-     * @param tagIds    标签id列表
-     * @param typeIds   类型id列表
+     *  title       标题
+     *  content     内容（html格式）
+     *  outline     概要
+     *  txtContent  文本内容
+     *  typeId      类型ID
+     *  tagNames    标签名称列表
      * @return
      */
-    @RequestMapping(value = "/update",method = RequestMethod.PUT)
-    ResultData update(Integer id,String title,String content,String tagIds,String typeIds){
-        if(id == null ||title == null || content == null){
-            return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTNULL);
-        }else{
-            ArticleInfo articleInfo = articleInfoService.update(id,title,content,tagIds,typeIds);
-            if(articleInfo == null) return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTEXIT);
-            return  new ResultData(articleInfo);
-        }
-    }
+//    @RequestMapping(value = "/update",method = RequestMethod.PUT)
+//    ResultData update(@RequestBody ArticleInfoView articleInfoView){
+//        if(id == null ||title == null || content == null){
+//            return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTNULL);
+//        }else{
+//            ArticleInfo articleInfo = articleInfoService.update(id,title,content,tagIds,typeIds);
+//            if(articleInfo == null) return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTEXIT);
+//            return  new ResultData(articleInfo);
+//        }
+//    }
 
 }
