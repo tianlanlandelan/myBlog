@@ -12,16 +12,18 @@ public class ArticleInfo {
     private String outline;
     private String txtContent;
     private Date sendTime;
+    private String imgUrl;
 
 
     public ArticleInfo() {
     }
 
-    public ArticleInfo(String title, String content, String outline, String txtContent) {
+    public ArticleInfo(String title, String content, String outline, String txtContent,String imgUrl) {
         this.title = title;
         this.content = content;
         this.outline = outline;
         this.txtContent = txtContent;
+        this.imgUrl = imgUrl;
         this.sendTime = new Date();
     }
 
@@ -72,6 +74,14 @@ public class ArticleInfo {
         this.txtContent = txtContent;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     @Override
     public String toString() {
         return "ArticleInfo{" +
@@ -81,6 +91,7 @@ public class ArticleInfo {
                 ", outline='" + outline + '\'' +
                 ", txtContent='" + txtContent + '\'' +
                 ", sendTime=" + sendTime +
+                ", imgUrl='" + imgUrl + '\'' +
                 '}';
     }
 }

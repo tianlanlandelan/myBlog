@@ -46,12 +46,16 @@ public class ArticleInfoService {
      * @return
      */
     public Integer insert(ArticleInfoView articleInfoView){
-        ArticleInfo articleInfo = new ArticleInfo(articleInfoView.getTitle(),articleInfoView.getContent(),articleInfoView.getOutline(),articleInfoView.getTxtContent());
-        if(articleInfo.getOutline() == null && articleInfo.getTxtContent() != null){
-            articleInfo.setOutline(articleInfo.getTxtContent().length() > 120 ? articleInfo.getTxtContent().substring(0,120) : articleInfo.getTxtContent());
+        ArticleInfo articleInfo = new ArticleInfo(articleInfoView.getTitle(),articleInfoView.getContent(),articleInfoView.getOutline(),articleInfoView.getTxtContent(),articleInfoView.getImgUrl());
+        String outline;
+        if(articleInfo.getOutline() != null){
+            outline = articleInfo.getOutline();
+            articleInfo.setOutline(outline.length() > 120 ? outline.substring(0, 120) : outline);
+        }else if(articleInfo.getTxtContent() != null) {
+            outline = articleInfo.getTxtContent();
+            articleInfo.setOutline(outline.length() > 120 ? outline.substring(0, 120) : outline);
         }else {
-            //TODO 当文章没有文本内容时，文章概要的处理
-            articleInfo.setOutline("我也不知道这是个什么鬼");
+            return null;
         }
         articleInfoMapper.insert(articleInfo);
         if(articleInfo.getId() != 0){
@@ -134,6 +138,7 @@ public class ArticleInfoService {
         articleInfoView.setContent(articleInfo.getContent());
         articleInfoView.setTxtContent(articleInfo.getTxtContent());
         articleInfoView.setSendTime(articleInfo.getSendTime());
+        articleInfoView.setImgUrl(articleInfo.getImgUrl());
 
         articleInfoView.setSendTimeStr(DateUtils.getDateTimeStr4Show(articleInfo.getSendTime()));
         List<TypeInfo> typesList = articleTypesMapper.getTypeInfoByArticleId(articleInfo.getId());

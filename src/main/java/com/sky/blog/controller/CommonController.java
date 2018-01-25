@@ -1,6 +1,7 @@
 package com.sky.blog.controller;
 
 import com.sky.blog.config.BlogConfig;
+import com.sky.blog.config.ResultData;
 import com.sky.blog.entity.ArticleInfo;
 import com.sky.blog.mapper.ArticleInfoMapper;
 import com.sky.blog.utils.DateUtils;
@@ -30,12 +31,10 @@ public class CommonController {
     /**
      * 文件上传
      * @param file
-     * @param request
      * @return
      */
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
-    String uploadImg(@RequestParam("file") MultipartFile file,
-                                          HttpServletRequest request) {
+    ResultData uploadImg(@RequestParam("file") MultipartFile file) {
         String fileName = file.getOriginalFilename();
         int index = fileName.lastIndexOf(BlogConfig.FILE_TYPE_SPLITSTR);
         if(index != -1)
@@ -46,11 +45,9 @@ public class CommonController {
         try {
             FileUtils.uploadFile(file.getBytes(), BlogConfig.UPLOAD_PATH , fileName);
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
-            return e.getMessage();
+            return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTNULL);
         }
-        //返回json
-        return "uploadimg success:" + fileName;
+        return new ResultData(fileName);
     }
 }

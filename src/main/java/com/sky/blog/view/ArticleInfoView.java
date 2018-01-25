@@ -15,6 +15,7 @@ public class ArticleInfoView {
     private String outline;
     private String txtContent;
     private String tagNames;
+    private String imgUrl;
     private List<String> tagList = new ArrayList<String>();
     private Integer typeId;
     private String typeName;
@@ -72,6 +73,14 @@ public class ArticleInfoView {
         this.tagNames = tagNames;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     public List<String> getTagList() {
         return tagList;
     }
@@ -121,6 +130,7 @@ public class ArticleInfoView {
                 ", outline='" + outline + '\'' +
                 ", txtContent='" + txtContent + '\'' +
                 ", tagNames='" + tagNames + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
                 ", tagList=" + tagList +
                 ", typeId=" + typeId +
                 ", typeName='" + typeName + '\'' +

@@ -15,6 +15,7 @@ public class ResultData {
     public static String MESSAGE_NOTNULL = "参数不能为空";
     public static String MESSAGE_ERROR = "貌似出了点小问题，请稍后重试";
     public static String MESSAGE_NODATA = "没有查到符合条件的数据";
+    public static String MESSAGE_UPLOAD_ERROR = "文件上传失败";
 
     private int code = SUCCESS;
     private String message = "success";

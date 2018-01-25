@@ -14,7 +14,7 @@ public class BlogConfig {
     /**
      * 文件上传路径
      */
-    public static String UPLOAD_PATH = "D:\\upload\\img\\";
+    public static String UPLOAD_PATH = "D:\\IdeaProjects\\myBlogWeb\\img\\";
 
     /**
      * 文件类型分割符
