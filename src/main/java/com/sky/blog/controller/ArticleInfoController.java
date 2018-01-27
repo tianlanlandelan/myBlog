@@ -86,6 +86,17 @@ public class ArticleInfoController {
             return  new ResultData(result);
         }
     }
+
+    @RequestMapping(value = "/getById",method = RequestMethod.GET)
+    ResultData getById(Integer id){
+        if(id == null){
+            return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTNULL);
+        }else{
+            ArticleInfoView articleInfoView = articleInfoService.getById(id);
+            if(articleInfoView == null)  return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTEXIT);
+            return new ResultData(articleInfoView);
+        }
+    }
     /**
      * 修改文章
      *  title       标题

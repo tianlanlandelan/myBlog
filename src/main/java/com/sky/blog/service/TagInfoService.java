@@ -27,6 +27,7 @@ public class TagInfoService {
         int count = 0 ;
         List<String> tagNameList = tagInfoMapper.getAllName();
         for(String tagName:list){
+            if(tagName == null || "".equals(tagName) || " ".equals(tagName)) continue;
             if(tagNameList == null || tagNameList.size() < 1 || !tagNameList.contains(tagName)){
                 TagInfo tagInfo = new TagInfo(tagName);
                 tagInfoMapper.insert(tagInfo);

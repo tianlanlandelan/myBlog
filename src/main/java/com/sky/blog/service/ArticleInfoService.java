@@ -38,7 +38,11 @@ public class ArticleInfoService {
     public List<ArticleInfo> getListByTagId(int tagId){
         return articleInfoMapper.getListByTagId(tagId);
     }
-
+    public ArticleInfoView getById(int id){
+        ArticleInfo articleInfo =  articleInfoMapper.getById(id);
+        if(articleInfo == null) return null;
+        return toArticleInfoView(articleInfo);
+    }
     /**
      * 添加文章
      * 当传入文章概要时，设置文章概要；
@@ -104,7 +108,7 @@ public class ArticleInfoService {
             articleTagsMapper.deleteByArticleId(articleId);
             String[] list =  tagNames.split(BlogConfig.SPLITSTR);
             for(String tagName:list){
-                if(tagName == null) continue;
+                if(tagName == null || "".equals(tagName) || " ".equals(tagName)) continue;
                 ArticleTags articleTags = new ArticleTags(articleId,tagName);
                 articleTagsMapper.insert(articleTags);
             }
