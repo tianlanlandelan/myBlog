@@ -97,6 +97,15 @@ public class ArticleInfoController {
             return new ResultData(articleInfoView);
         }
     }
+    @RequestMapping(value = "/deleteById",method = RequestMethod.DELETE)
+    ResultData deleteById(Integer id){
+        if(id == null){
+            return new ResultData(ResultData.ERROR,ResultData.MESSAGE_NOTNULL);
+        }else{
+            articleInfoService.deleteById(id);
+            return new ResultData();
+        }
+    }
     /**
      * 修改文章
      *  title       标题

@@ -73,6 +73,9 @@ public class ArticleInfoService {
         }
     }
 
+    public void deleteById(int id){
+        articleInfoMapper.deleteById(id);
+    }
     /**
      * 修改文章
      * 当传入参数中包含标签id和类型id时，修改文章标签和类型

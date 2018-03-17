@@ -58,4 +58,7 @@ public interface ArticleInfoMapper{
     @Update("UPDATE " + tableName + " SET title = #{title} , content = #{content} , txtContent = #{txtContent} , outline = #{outline} , imgurl = #{imgUrl} WHERE id = #{id} ")
     void update(ArticleInfo articleInfo);
 
+    @Delete("DELETE FROM " + tableName + " WHERE id = #{id}")
+    void deleteById(int id);
+
 }
